@@ -1,4 +1,5 @@
 let ctx = null
+let bootChimeDropped = false
 
 export function isSoundEnabled() {
   try {
@@ -11,6 +12,18 @@ export function isSoundEnabled() {
 export function setSoundEnabled(on) {
   try {
     localStorage.setItem('sfx', on ? '1' : '0')
+  } catch {
+    /* ignore */
+  }
+}
+
+export function unlockAudio() {
+  try {
+    const c = getCtx()
+    if (c.state === 'running' && bootChimeDropped) {
+      bootChimeDropped = false
+      playBootDone()
+    }
   } catch {
     /* ignore */
   }
@@ -71,6 +84,11 @@ export function playLoadDone() {
 }
 
 export function playBootDone() {
+  if (!isSoundEnabled()) return
+  if (!ctx || ctx.state !== 'running') {
+    bootChimeDropped = true
+    return
+  }
   blip(440, 0.07, 'square', 0.04, 0)
   blip(660, 0.07, 'square', 0.04, 0.08)
   blip(880, 0.12, 'square', 0.04, 0.16)

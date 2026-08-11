@@ -4,7 +4,7 @@ import BootScreen from './components/BootScreen'
 import Loader from './components/Loader'
 import Navbar from './components/Navbar'
 import Terminal from './components/Terminal'
-import { playClick, playNav } from './utils/sound'
+import { playClick, playNav, unlockAudio } from './utils/sound'
 import Home from './pages/Home'
 import Skills from './pages/Skills'
 import Projects from './pages/Projects'
@@ -46,6 +46,7 @@ function Shell() {
 
   useEffect(() => {
     const onClick = (e) => {
+      unlockAudio()
       const link = e.target.closest('a')
       if (link) playNav()
       else if (e.target.closest('button')) playClick()
