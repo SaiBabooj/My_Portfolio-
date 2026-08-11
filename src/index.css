@@ -1306,21 +1306,38 @@ a {
   padding: 26px;
 }
 
-.contact-form label {
+.contact-form label,
+.field label {
   display: block;
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-bottom: 6px;
+  font-family: var(--font-term);
+  font-size: 0.75rem;
   letter-spacing: 1px;
+  color: var(--green-dim);
+  margin-bottom: 8px;
+}
+
+.field {
+  margin-bottom: 14px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder,
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--green-dim);
+  opacity: 0.6;
 }
 
 .contact-form .field {
   margin-bottom: 18px;
 }
 
+.field input,
+.field textarea,
 .contact-form input,
 .contact-form textarea {
   width: 100%;
+  box-sizing: border-box;
   background: var(--bg);
   border: 1px solid var(--green-dark);
   color: var(--green);
@@ -1331,13 +1348,16 @@ a {
   transition: all 0.2s;
 }
 
+.field input:focus,
+.field textarea:focus,
 .contact-form input:focus,
 .contact-form textarea:focus {
   border-color: var(--green);
   box-shadow: 0 0 12px rgba(0, 255, 65, 0.3);
 }
 
-.contact-form textarea {
+.contact-form textarea,
+.field textarea {
   resize: vertical;
   min-height: 130px;
 }
