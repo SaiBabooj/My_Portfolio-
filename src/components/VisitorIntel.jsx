@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const UA = navigator.userAgent
 
@@ -25,9 +25,75 @@ function getDevice() {
   return 'Desktop'
 }
 
+function getGPU() {
+  try {
+    const canvas = document.createElement('canvas')
+    const gl =
+      canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+    if (!gl) return 'UNKNOWN'
+    const ext = gl.getExtension('WEBGL_debug_renderer_info')
+    if (!ext) return 'UNKNOWN'
+    const renderer = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
+    gl.getExtension('WEBGL_lose_context')?.loseContext()
+    return renderer || 'UNKNOWN'
+  } catch {
+    return 'UNKNOWN'
+  }
+}
+
+const timeFmt = new Intl.DateTimeFormat(undefined, {
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+})
+
 export default function VisitorIntel({ onClose }) {
   const [phase, setPhase] = useState('scan')
   const [rows, setRows] = useState([])
+  const [gpu, setGpu] = useState('UNKNOWN')
+  const [battery, setBattery] = useState(null)
+  const [now, setNow] = useState(new Date())
+  const startRef = useRef(Date.now())
+
+  const [visits] = useState(() => {
+    try {
+      const v = parseInt(localStorage.getItem('vi_visits') || '0', 10) + 1
+      localStorage.setItem('vi_visits', String(v))
+      return v
+    } catch {
+      return 1
+    }
+  })
+
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(t)
+  }, [])
+
+  useEffect(() => {
+    if (!navigator.getBattery) return
+    let bat = null
+    navigator
+      .getBattery()
+      .then((b) => {
+        bat = b
+        setBattery({ level: b.level, charging: b.charging })
+        b.addEventListener('levelchange', () =>
+          setBattery({ level: b.level, charging: b.charging })
+        )
+        b.addEventListener('chargingchange', () =>
+          setBattery({ level: b.level, charging: b.charging })
+        )
+      })
+      .catch(() => {})
+    return () => {
+      bat?.removeEventListener?.('levelchange', () => {})
+    }
+  }, [])
+
+  useEffect(() => {
+    setGpu(getGPU())
+  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -77,6 +143,9 @@ export default function VisitorIntel({ onClose }) {
         city && country ? `${city}, ${country}` : country || 'PROTECTED'
       const tz =
         Intl.DateTimeFormat().resolvedOptions().timeZone || 'UNKNOWN'
+      const orientation =
+        screen.orientation?.type ||
+        (window.innerWidth > window.innerHeight ? 'landscape' : 'portrait')
 
       const rows = [
         ['IP ADDRESS', ip, true],
@@ -86,6 +155,11 @@ export default function VisitorIntel({ onClose }) {
         ['OS', parseOS(), false],
         ['BROWSER', parseBrowser(), false],
         ['SCREEN', `${screen.width}x${screen.height}`, false],
+        ['DPI', `${Math.round(window.devicePixelRatio * 100)}%`, false],
+        ['COLOR DEPTH', `${screen.colorDepth}-bit`, false],
+        ['ORIENTATION', orientation, false],
+        ['TOUCH POINTS', navigator.maxTouchPoints || 0, false],
+        ['WINDOW', `${window.innerWidth}x${window.innerHeight}`, false],
         [
           'NETWORK',
           conn?.effectiveType
@@ -109,6 +183,10 @@ export default function VisitorIntel({ onClose }) {
     }
   }, [])
 
+  const elapsed = Math.floor((Date.now() - startRef.current) / 1000)
+  const mm = String(Math.floor(elapsed / 60)).padStart(2, '0')
+  const ss = String(elapsed % 60).padStart(2, '0')
+
   return (
     <div className="visitor-intel">
       <div className="visitor-head">
@@ -126,16 +204,44 @@ export default function VisitorIntel({ onClose }) {
             <span className="intel-scan blink">SCANNING VISITOR...</span>
           </div>
         ) : (
-          rows.map(([k, v, hot], i) => (
-            <div
-              key={k}
-              className="intel-row intel-reveal"
-              style={{ animationDelay: `${i * 0.08}s` }}
-            >
-              <span className="k">{k}</span>
-              <span className={`v${hot ? ' hot' : ''}`}>{v}</span>
+          <>
+            <div className="intel-row intel-reveal">
+              <span className="k">CLOCK</span>
+              <span className="v hot">{timeFmt.format(now)}</span>
             </div>
-          ))
+            <div className="intel-row intel-reveal">
+              <span className="k">ON PAGE</span>
+              <span className="v">{mm}:{ss}</span>
+            </div>
+            <div className="intel-row intel-reveal">
+              <span className="k">VISITS</span>
+              <span className="v">{visits}</span>
+            </div>
+            <div className="intel-row intel-reveal">
+              <span className="k">BATTERY</span>
+              <span className="v">
+                {battery
+                  ? `${Math.round(battery.level * 100)}% ${
+                      battery.charging ? 'charging' : 'discharging'
+                    }`
+                  : 'UNKNOWN'}
+              </span>
+            </div>
+            <div className="intel-row intel-reveal">
+              <span className="k">GPU</span>
+              <span className="v">{gpu}</span>
+            </div>
+            {rows.map(([k, v, hot], i) => (
+              <div
+                key={k}
+                className="intel-row intel-reveal"
+                style={{ animationDelay: `${i * 0.05}s` }}
+              >
+                <span className="k">{k}</span>
+                <span className={`v${hot ? ' hot' : ''}`}>{v}</span>
+              </div>
+            ))}
+          </>
         )}
       </div>
     </div>
