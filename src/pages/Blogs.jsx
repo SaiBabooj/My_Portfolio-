@@ -87,10 +87,32 @@ export default function Blogs() {
           answer — posted publicly right here.
         </p>
 
+        <div className="qa-list">
+          {qaEntries.length === 0 && (
+            <div className="dim">NO QUESTIONS LOGGED YET. BE THE FIRST.</div>
+          )}
+          {qaEntries.map((qa, i) => (
+            <div className="qa-item" key={i}>
+              <div className="qa-q">
+                <span className="qa-num">[{String(i + 1).padStart(2, '0')}]</span>
+                <span className="qa-qtext">{qa.q}</span>
+              </div>
+              <div className="qa-byline dim">
+                &gt; asked by {qa.from}
+              </div>
+              <div className="qa-a">
+                <span className="qa-ahead">ANSWER:</span>
+                <p>{qa.a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div className="qa-form-wrap">
+          <div className="qa-form-head">&gt; ask your own question</div>
           {status === 'sent' && (
             <div className="form-sent">
-              &gt; QUESTION RECEIVED. ANSWER WILL BE POSTED HERE, OPERATIVE.
+              &gt; QUESTION RECEIVED. THE ANSWER WILL BE POSTED HERE SOON.
             </div>
           )}
           {status === 'error' && (
@@ -102,46 +124,27 @@ export default function Blogs() {
           <form onSubmit={handleAsk}>
             <div className="qa-fields">
               <div className="field">
-                <label htmlFor="qname">// CALLSIGN (OPTIONAL)</label>
-                <input id="qname" name="qname" type="text" placeholder="anonymous_42" />
+                <label htmlFor="qname">YOUR NAME (OPTIONAL)</label>
+                <input id="qname" name="qname" type="text" placeholder="Anonymous" />
               </div>
               <div className="field">
-                <label htmlFor="qemail">// RETURN CHANNEL (OPTIONAL)</label>
+                <label htmlFor="qemail">YOUR EMAIL (OPTIONAL)</label>
                 <input id="qemail" name="qemail" type="email" placeholder="you@domain.com" />
               </div>
             </div>
             <div className="field">
-              <label htmlFor="question">// YOUR QUESTION</label>
+              <label htmlFor="question">YOUR QUESTION</label>
               <textarea
                 id="question"
                 name="question"
                 required
-                placeholder="what are your thoughts on...?"
+                placeholder="type your question here..."
               />
             </div>
             <button className="btn" type="submit" disabled={status === 'sending'}>
               [ SEND QUESTION &gt;&gt; ]
             </button>
           </form>
-        </div>
-
-        <div className="qa-list">
-          {qaEntries.length === 0 && (
-            <div className="dim">NO QUESTIONS LOGGED YET. BE THE FIRST.</div>
-          )}
-          {qaEntries.map((qa, i) => (
-            <div className="qa-item" key={i}>
-              <div className="qa-q">
-                <span className="qa-icon">Q.</span>
-                {qa.q}
-                <span className="qa-from dim">— {qa.from}</span>
-              </div>
-              <div className="qa-a">
-                <span className="qa-icon">A.</span>
-                {qa.a}
-              </div>
-            </div>
-          ))}
         </div>
       </section>
     </div>

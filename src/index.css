@@ -1567,9 +1567,18 @@ a {
 
 .qa-form-wrap {
   border: 1px solid var(--green-dark);
+  border-top: 2px solid var(--green);
   padding: 18px;
-  margin-bottom: 22px;
+  margin-top: 26px;
   background: rgba(0, 255, 65, 0.03);
+}
+
+.qa-form-head {
+  font-family: var(--font-term);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: var(--amber);
+  margin-bottom: 14px;
 }
 
 .qa-fields {
@@ -1581,38 +1590,60 @@ a {
 .qa-list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .qa-item {
   border: 1px solid var(--green-dark);
-  padding: 16px 18px;
+  padding: 18px 20px;
+  background: rgba(0, 255, 65, 0.02);
 }
 
 .qa-q {
+  display: flex;
+  gap: 10px;
   color: var(--green);
-  font-size: 0.95rem;
-  margin-bottom: 12px;
+  font-family: var(--font-boot);
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.qa-num {
+  color: var(--amber);
+  font-family: var(--font-term);
+  flex-shrink: 0;
+}
+
+.qa-qtext {
+  font-weight: bold;
+}
+
+.qa-byline {
+  font-size: 0.72rem;
+  margin: 6px 0 12px 24px;
+  letter-spacing: 1px;
 }
 
 .qa-a {
-  color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.7;
-  border-left: 2px solid var(--green-dark);
-  padding-left: 12px;
+  border-left: 2px solid var(--green);
+  padding-left: 14px;
+  margin-top: 10px;
 }
 
-.qa-icon {
-  color: var(--amber);
+.qa-ahead {
+  display: block;
   font-family: var(--font-term);
-  font-weight: bold;
-  margin-right: 8px;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: var(--amber);
+  margin-bottom: 6px;
 }
 
-.qa-from {
-  font-size: 0.75rem;
-  margin-left: 6px;
+.qa-a p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0;
 }
 
 /* ------- BLOG ARTICLE ------- */
