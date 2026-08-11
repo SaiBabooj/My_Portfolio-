@@ -1418,3 +1418,262 @@ a {
 .footer .heart {
   color: var(--red);
 }
+
+/* ------- BLOGS ------- */
+
+.blog-now,
+.blog-posts,
+.blog-qa {
+  margin-bottom: 48px;
+}
+
+.section-head {
+  font-family: var(--font-boot);
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+  color: var(--green);
+}
+
+.now-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.now-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--green-dark);
+  border-left: 3px solid var(--green);
+  background: rgba(0, 255, 65, 0.03);
+  padding: 14px 16px;
+  transition: all 0.2s;
+}
+
+.now-item:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 14px rgba(0, 255, 65, 0.15);
+}
+
+.now-status {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  color: var(--bg);
+  background: var(--amber);
+  padding: 4px 8px;
+  font-family: var(--font-term);
+}
+
+.now-title {
+  font-family: var(--font-boot);
+  font-size: 1.05rem;
+  color: var(--green);
+}
+
+.now-detail {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+.now-eta {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.post-card {
+  display: block;
+  border: 1px solid var(--green-dark);
+  padding: 18px 20px;
+  color: var(--muted);
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.post-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--green);
+  transform: scaleY(0);
+  transition: transform 0.2s;
+}
+
+.post-card:hover {
+  color: var(--green);
+  border-color: var(--green);
+  transform: translateX(5px);
+  box-shadow: 0 0 14px rgba(0, 255, 65, 0.15);
+}
+
+.post-card:hover::before {
+  transform: scaleY(1);
+}
+
+.post-meta {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  font-size: 0.72rem;
+  margin-bottom: 8px;
+}
+
+.post-date {
+  color: var(--amber);
+  letter-spacing: 1px;
+}
+
+.post-tags {
+  color: var(--green-dim);
+}
+
+.post-title {
+  font-family: var(--font-boot);
+  font-size: 1.25rem;
+  color: var(--green);
+  margin-bottom: 6px;
+}
+
+.post-excerpt {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.post-read {
+  font-family: var(--font-term);
+  font-size: 0.75rem;
+  color: var(--amber);
+}
+
+.blog-qa-note {
+  font-size: 0.85rem;
+  margin-bottom: 18px;
+}
+
+.qa-form-wrap {
+  border: 1px solid var(--green-dark);
+  padding: 18px;
+  margin-bottom: 22px;
+  background: rgba(0, 255, 65, 0.03);
+}
+
+.qa-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.qa-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.qa-item {
+  border: 1px solid var(--green-dark);
+  padding: 16px 18px;
+}
+
+.qa-q {
+  color: var(--green);
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.qa-a {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+  border-left: 2px solid var(--green-dark);
+  padding-left: 12px;
+}
+
+.qa-icon {
+  color: var(--amber);
+  font-family: var(--font-term);
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.qa-from {
+  font-size: 0.75rem;
+  margin-left: 6px;
+}
+
+/* ------- BLOG ARTICLE ------- */
+
+.post-article {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.post-back {
+  display: inline-block;
+  color: var(--green-dim);
+  font-size: 0.8rem;
+  margin-bottom: 20px;
+  transition: all 0.2s;
+}
+
+.post-back:hover {
+  color: var(--green);
+  transform: translateX(-3px);
+}
+
+.article-title {
+  font-family: var(--font-boot);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin-bottom: 8px;
+}
+
+.article-head {
+  font-family: var(--font-boot);
+  font-size: 1.1rem;
+  color: var(--green);
+  margin: 28px 0 10px;
+}
+
+.article-head .idx {
+  color: var(--amber);
+  margin-right: 8px;
+}
+
+.article-text {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.85;
+}
+
+.article-footer {
+  margin-top: 36px;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 640px) {
+  .qa-fields {
+    grid-template-columns: 1fr;
+  }
+  .now-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .now-eta {
+    margin-left: 0;
+  }
+}

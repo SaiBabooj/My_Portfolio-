@@ -9,6 +9,8 @@ import Home from './pages/Home'
 import Skills from './pages/Skills'
 import Projects from './pages/Projects'
 import Achievements from './pages/Achievements'
+import Blogs from './pages/Blogs'
+import BlogPost from './pages/BlogPost'
 import Contact from './pages/Contact'
 
 function Shell() {
@@ -68,6 +70,8 @@ function Shell() {
         <Route path="/skills" element={<Skills />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/achievements" element={<Achievements />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogs/:id" element={<BlogPost />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Home />} />
       </Routes>

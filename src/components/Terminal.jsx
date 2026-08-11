@@ -5,6 +5,7 @@ import { playKey } from '../utils/sound'
 import { skillsData } from '../data/skills'
 import { projectsData } from '../data/projects'
 import { achievementsData } from '../data/achievements'
+import { blogPosts, qaEntries } from '../data/blogs'
 import { socialData } from '../data/social'
 
 const ASCII = `
@@ -21,6 +22,7 @@ const HELP = [
   ['skills', 'list skill modules'],
   ['projects', 'list deployed projects'],
   ['achievements', 'list confirmed achievements'],
+  ['blogs', 'read my write-ups and Q&A log'],
   ['contact', 'show contact intel'],
   ['social', 'open my profiles'],
   ['clear', 'wipe terminal history'],
@@ -195,6 +197,21 @@ export default function Terminal({ onClose }) {
         )
         break
 
+      case 'blogs':
+        pushText(
+          <>
+            <span className="cmd">[thought log]</span>
+            {'\n'}
+            {blogPosts.map((p) => `- ${p.title} (${p.date})`).join('\n')}
+            {'\n'}
+            <span className="dim">
+              {qaEntries.length} answered question{qaEntries.length === 1 ? '' : 's'} on
+              file. run `open blogs` to read everything.
+            </span>
+          </>
+        )
+        break
+
       case 'social': {
         socialData.forEach((s) => window.open(s.url, '_blank'))
         pushText('OPENING ALL CHANNELS...', 'dim')
@@ -203,12 +220,16 @@ export default function Terminal({ onClose }) {
 
       case 'open':
         if (!arg) {
-          pushText('usage: open [skills|projects|achievements|contact]', 'err')
+          pushText(
+            'usage: open [skills|projects|achievements|blogs|contact]',
+            'err'
+          )
         } else {
           const routes = {
             skills: '/skills',
             projects: '/projects',
             achievements: '/achievements',
+            blogs: '/blogs',
             contact: '/contact',
             home: '/',
           }

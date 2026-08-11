@@ -7,7 +7,8 @@ const LINKS = [
   { path: '/skills', label: 'skills', idx: '01' },
   { path: '/projects', label: 'projects', idx: '02' },
   { path: '/achievements', label: 'achievements', idx: '03' },
-  { path: '/contact', label: 'contact', idx: '04' },
+  { path: '/blogs', label: 'blogs', idx: '04' },
+  { path: '/contact', label: 'contact', idx: '05' },
 ]
 
 export default function Navbar({ onOpenTerminal }) {

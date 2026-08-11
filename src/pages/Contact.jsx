@@ -1,12 +1,7 @@
 import { useState } from 'react'
 import emailjs from '@emailjs/browser'
 import { socialData } from '../data/social'
-
-const EMAILJS = {
-  serviceId: 'service_4wtcj7h',
-  templateId: 'template_1inab3c',
-  publicKey: 'fwx2B2etZvmnB6fWe',
-}
+import { EMAILJS_CONFIG } from '../utils/emailjsConfig'
 
 export default function Contact() {
   const [status, setStatus] = useState(null)
@@ -22,10 +17,10 @@ export default function Contact() {
     setStatus('sending')
     try {
       await emailjs.send(
-        EMAILJS.serviceId,
-        EMAILJS.templateId,
+        EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.contactTemplateId,
         payload,
-        { publicKey: EMAILJS.publicKey }
+        { publicKey: EMAILJS_CONFIG.publicKey }
       )
       setStatus('sent')
       form.reset()
