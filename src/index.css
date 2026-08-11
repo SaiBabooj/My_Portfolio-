@@ -880,6 +880,14 @@ a {
   letter-spacing: 1px;
 }
 
+.intel-row .k.gotcha,
+.intel-row .v.gotcha {
+  color: var(--green);
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.7);
+  letter-spacing: 2px;
+}
+
 .intel-reveal {
   animation: intel-row-in 0.35s ease both;
 }

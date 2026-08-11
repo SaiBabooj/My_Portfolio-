@@ -241,6 +241,10 @@ export default function VisitorIntel({ onClose }) {
                 <span className={`v${hot ? ' hot' : ''}`}>{v}</span>
               </div>
             ))}
+            <div className="intel-row intel-reveal">
+              <span className="k gotcha">GOTCHA</span>
+              <span className="v gotcha">😉</span>
+            </div>
           </>
         )}
       </div>
