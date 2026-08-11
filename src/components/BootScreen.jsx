@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { playBootDone } from '../utils/sound'
 
 const LINES = [
   { text: 'BIOS v4.2.0 — SAIBABOOJ BIOS', cls: 'dim' },
@@ -29,6 +30,7 @@ export default function BootScreen({ onDone }) {
 
   useEffect(() => {
     if (skipped) {
+      playBootDone()
       onDone()
       return
     }
@@ -39,6 +41,7 @@ export default function BootScreen({ onDone }) {
       setVisible(Math.floor(progress * LINES.length))
       if (progress >= 1) {
         clearInterval(timer)
+        playBootDone()
         setTimeout(onDone, 350)
       }
     }, 40)

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { playLoadStart, playLoadDone } from '../utils/sound'
 
 const STATUS_STEPS = [
   'INITIALIZING UPLINK...',
@@ -13,6 +14,14 @@ export default function Loader({ target, onDone }) {
   const [stepIdx, setStepIdx] = useState(0)
   const [exiting, setExiting] = useState(false)
   const doneRef = useRef(false)
+  const startedRef = useRef(false)
+
+  useEffect(() => {
+    if (!startedRef.current) {
+      startedRef.current = true
+      playLoadStart()
+    }
+  }, [])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -39,6 +48,7 @@ export default function Loader({ target, onDone }) {
   useEffect(() => {
     if (progress >= 100 && !doneRef.current) {
       doneRef.current = true
+      playLoadDone()
       setTimeout(() => {
         setExiting(true)
         setTimeout(onDone, 480)

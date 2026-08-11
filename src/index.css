@@ -318,6 +318,28 @@ a {
   text-transform: uppercase;
 }
 
+.nav-sound-btn {
+  background: transparent;
+  border: 1px solid var(--green-dark);
+  color: var(--green-dim);
+  font-family: var(--font-term);
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-sound-btn:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.nav-sound-btn.muted {
+  color: var(--red, #f43f5e);
+  border-color: var(--red, #f43f5e);
+  text-decoration: line-through;
+}
+
 .nav-terminal-btn:hover {
   background: var(--green);
   color: var(--bg);
@@ -353,7 +375,8 @@ a {
   .hamburger {
     display: block;
   }
-  .nav-terminal-btn {
+  .nav-terminal-btn,
+  .nav-sound-btn {
     display: none;
   }
 }

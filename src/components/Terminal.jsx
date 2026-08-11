@@ -1,6 +1,7 @@
 import { Fragment as ReactFragment } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { playKey } from '../utils/sound'
 import { skillsData } from '../data/skills'
 import { projectsData } from '../data/projects'
 import { achievementsData } from '../data/achievements'
@@ -267,6 +268,8 @@ export default function Terminal({ onClose }) {
       setInput('')
     } else if (e.key === 'Escape') {
       onClose()
+    } else if (e.key.length === 1) {
+      playKey()
     }
   }
 

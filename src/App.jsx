@@ -4,6 +4,7 @@ import BootScreen from './components/BootScreen'
 import Loader from './components/Loader'
 import Navbar from './components/Navbar'
 import Terminal from './components/Terminal'
+import { playClick, playNav } from './utils/sound'
 import Home from './pages/Home'
 import Skills from './pages/Skills'
 import Projects from './pages/Projects'
@@ -41,6 +42,16 @@ function Shell() {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  useEffect(() => {
+    const onClick = (e) => {
+      const link = e.target.closest('a')
+      if (link) playNav()
+      else if (e.target.closest('button')) playClick()
+    }
+    document.addEventListener('click', onClick)
+    return () => document.removeEventListener('click', onClick)
   }, [])
 
   return (

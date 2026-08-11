@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { isSoundEnabled, setSoundEnabled } from '../utils/sound'
 
 const LINKS = [
   { path: '/', label: 'home', idx: '00' },
@@ -11,6 +12,13 @@ const LINKS = [
 
 export default function Navbar({ onOpenTerminal }) {
   const [open, setOpen] = useState(false)
+  const [soundOn, setSoundOn] = useState(() => isSoundEnabled())
+
+  const toggleSound = () => {
+    const on = !soundOn
+    setSoundOn(on)
+    setSoundEnabled(on)
+  }
 
   return (
     <nav className="navbar">
@@ -34,6 +42,14 @@ export default function Navbar({ onOpenTerminal }) {
       </ul>
 
       <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+        <button
+          className={`nav-sound-btn${soundOn ? '' : ' muted'}`}
+          onClick={toggleSound}
+          aria-label="toggle sound"
+          title={soundOn ? 'sounds: ON' : 'sounds: OFF'}
+        >
+          {soundOn ? '[SND:ON]' : '[SND:OFF]'}
+        </button>
         <button className="nav-terminal-btn" onClick={onOpenTerminal}>
           &gt;_ terminal
         </button>
