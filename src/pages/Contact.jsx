@@ -1,14 +1,39 @@
 import { useState } from 'react'
+import emailjs from '@emailjs/browser'
 import { socialData } from '../data/social'
 
-export default function Contact() {
-  const [sent, setSent] = useState(false)
+const EMAILJS = {
+  serviceId: 'service_4wtcj7h',
+  templateId: 'template_1inab3c',
+  publicKey: 'fwx2B2etZvmnB6fWe',
+}
 
-  const handleSubmit = (e) => {
+export default function Contact() {
+  const [status, setStatus] = useState(null)
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSent(true)
-    e.target.reset()
-    setTimeout(() => setSent(false), 5000)
+    const form = e.target
+    const payload = {
+      from_name: form.name.value,
+      reply_to: form.email.value,
+      message: form.msg.value,
+    }
+    setStatus('sending')
+    try {
+      await emailjs.send(
+        EMAILJS.serviceId,
+        EMAILJS.templateId,
+        payload,
+        { publicKey: EMAILJS.publicKey }
+      )
+      setStatus('sent')
+      form.reset()
+      setTimeout(() => setStatus(null), 6000)
+    } catch {
+      setStatus('error')
+      setTimeout(() => setStatus(null), 6000)
+    }
   }
 
   return (
@@ -23,9 +48,14 @@ export default function Contact() {
 
       <div className="contact-grid">
         <div className="contact-form">
-          {sent && (
-            <div className="form-sent">
-              &gt; TRANSMISSION SENT. I WILL GET BACK TO YOU, OPERATIVE.
+          {status && (
+            <div className={`form-sent ${status === 'error' ? 'form-error' : ''}`}>
+              {status === 'sending' &&
+                '> ESTABLISHING SECURE CHANNEL... DO NOT CLOSE THE SITE.'}
+              {status === 'sent' &&
+                '> TRANSMISSION SENT. I WILL GET BACK TO YOU, OPERATIVE.'}
+              {status === 'error' &&
+                '> TRANSMISSION FAILED. CHANNEL DISRUPTED — USE AN OPEN CHANNEL ON THE RIGHT.'}
             </div>
           )}
           <form onSubmit={handleSubmit}>
@@ -41,7 +71,7 @@ export default function Contact() {
               <label htmlFor="msg">// MESSAGE PAYLOAD</label>
               <textarea id="msg" name="msg" required placeholder="type your message here..." />
             </div>
-            <button className="btn" type="submit">
+            <button className="btn" type="submit" disabled={status === 'sending'}>
               [ TRANSMIT &gt;&gt; ]
             </button>
           </form>

@@ -1351,6 +1351,16 @@ a {
   animation: fade-up 0.4s ease both;
 }
 
+.form-sent.form-error {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .social-list {
   list-style: none;
   display: flex;
