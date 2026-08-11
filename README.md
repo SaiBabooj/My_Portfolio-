@@ -1,25 +1,53 @@
-# saibabooj — Hacker Portfolio
+# Sai Babooj — Portfolio Website
 
-Hacker-green themed portfolio with boot sequence, matrix rain, an in-page
-terminal shell, and animated page transitions.
+Personal portfolio website built with React and Vite. It combines a
+terminal-style interface with animated page transitions and data-driven
+sections for skills, projects, achievements, and contact.
 
-## Run
+## Tech Stack
+
+- React 19 + Vite
+- React Router (hash-based routing)
+- Custom CSS animations (no UI framework)
+
+## Getting Started
 
 ```bash
 npm install
-npm run dev      # dev server
+npm run dev      # start dev server at http://localhost:5173
 npm run build    # production build (dist/)
-npm run lint     # oxlint
+npm run lint     # lint with oxlint
 ```
 
-## Terminal shortcuts
+## Site Structure
 
-- `Ctrl + ~` (or `Cmd + ~` on macOS) anywhere — open/close the terminal shell
-- Type `help` inside the terminal for the command list
+| Route            | Description                                  |
+| ---------------- | -------------------------------------------- |
+| `/`              | Home — animated background, typewriter roles |
+| `/skills`        | Skill categories with animated proficiency bars |
+| `/projects`      | Project cards, pulled from `src/data/projects.js` |
+| `/achievements`  | Achievement timeline                        |
+| `/contact`       | Contact form + social links                 |
 
-## Add projects (one at a time)
+## Terminal Interface
 
-Edit `src/data/projects.js` — uncomment the template and fill it in:
+The site includes a built-in terminal shell:
+
+- Press `Ctrl + ~` (or `Cmd + ~` on macOS) anywhere to open/close it
+- Type `help` inside the terminal to list available commands
+- Commands can browse the site (e.g. `open projects`) and show content from
+  the same data files used by the pages
+
+## Content Management
+
+All site content is data-driven. Edit these files to update the site:
+
+- `src/data/projects.js` — project entries
+- `src/data/skills.js` — skill categories and levels
+- `src/data/achievements.js` — achievements
+- `src/data/social.js` — profile links
+
+### Adding a project
 
 ```js
 {
@@ -27,14 +55,13 @@ Edit `src/data/projects.js` — uncomment the template and fill it in:
   description: 'Short description of the project.',
   tags: ['React', 'Python', 'API'],
   status: 'live', // 'live' | 'wip'
-  demo: 'https://example.com',
-  github: 'https://github.com/SaiBabooj',
+  openSource: true, // optional — shows an open source badge
+  demo: 'https://example.com', // optional
+  github: 'https://github.com/SaiBabooj/repo', // optional — omit for private projects
 },
 ```
 
-Same pattern for achievements in `src/data/achievements.js` and skills in
-`src/data/skills.js`. Links live in `src/data/social.js`.
+## Deployment
 
-## Pages
-
-`/` home (matrix bg + typewriter) · `/skills` · `/projects` · `/achievements` · `/contact`
+Connect the repository to Vercel (Vite preset). Each push to `main` is
+deployed automatically — no manual build step required.
