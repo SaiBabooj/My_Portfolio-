@@ -30,9 +30,10 @@ export default function Contact() {
       setStatus('sent')
       form.reset()
       setTimeout(() => setStatus(null), 6000)
-    } catch {
-      setStatus('error')
-      setTimeout(() => setStatus(null), 6000)
+    } catch (err) {
+      console.error('EmailJS error:', err)
+      setStatus(err.status ? `error:${err.status}` : 'error')
+      setTimeout(() => setStatus(null), 8000)
     }
   }
 
@@ -56,6 +57,16 @@ export default function Contact() {
                 '> TRANSMISSION SENT. I WILL GET BACK TO YOU, OPERATIVE.'}
               {status === 'error' &&
                 '> TRANSMISSION FAILED. CHANNEL DISRUPTED — USE AN OPEN CHANNEL ON THE RIGHT.'}
+              {status === 'error:400' &&
+                '> FAILED [400]: BAD REQUEST — CHECK TEMPLATE VARIABLES ({{from_name}}, {{reply_to}}, {{message}}).'}
+              {status === 'error:403' &&
+                '> FAILED [403]: DOMAIN BLOCKED — WHITELIST THIS SITE IN EMAILJS SETTINGS.'}
+              {status === 'error:421' &&
+                '> FAILED [421]: SERVICE NOT READY — CONNECT YOUR MAIL ACCOUNT IN EMAILJS.'}
+              {status === 'error:422' &&
+                '> FAILED [422]: REQUEST NOT ACCEPTED — CHECK YOUR TEMPLATE AND SERVICE SETUP.'}
+              {status === 'error:429' &&
+                '> FAILED [429]: RATE LIMIT — TOO MANY REQUESTS, WAIT AND RETRY.'}
             </div>
           )}
           <form onSubmit={handleSubmit}>
